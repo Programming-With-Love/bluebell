@@ -1,7 +1,7 @@
 app:
-  name: "web_app"
+  name: "bulebell"
   mode: "dev"
-  port: 8081
+  port: 8080
 log:
   level: "debug"
   filename: "web_app.log"

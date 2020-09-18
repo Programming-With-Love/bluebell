@@ -21,7 +21,8 @@ func SignUpHandler(c *gin.Context) {
 	//	2.c.params  路径参数
 	//	3.ShouldBindJSON() JSON数据,必须建立在一个已有的结构体上
 	//	在这里,我们用models里面的params进行了使用
-	var p models.ParamSignUp
+	//创建一个指针类型
+	p := new(models.ParamSignUp)
 	if err := c.ShouldBindJSON(&p); err != nil {
 		//	请求参数有误,直接返回感应
 		//	这里纪录一下日志,每一个字段都要有自己的类型,记录错误就是error
@@ -31,11 +32,20 @@ func SignUpHandler(c *gin.Context) {
 		})
 		return
 	}
+	//手动对请求参数校验
+	//不要相信前端啊,虽然前端也可以进行校验
+	if len(p.Username) == 0 || len(p.Password) == 0 || len(p.RePassword) == 0 || p.Password != p.RePassword {
+		zap.L().Error("SignUp with invalid param")
+		c.JSON(http.StatusOK, gin.H{
+			"msg": "请求参数有误",
+		})
+		return
+	}
 	//打印一下这个结构体
 	fmt.Println(p)
 
 	//	2.业务处理
-	logic.SignUp()
+	logic.SignUp(p)
 	//	3.返回相应
 	c.JSON(http.StatusOK, gin.H{
 		"msg": "success",
