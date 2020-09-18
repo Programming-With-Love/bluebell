@@ -19,10 +19,6 @@ var (
 	ErrorInvalidPassword = errors.New("用户名或密码错误")
 )
 
-func QueryUserByUsername() {
-
-}
-
 // CheckUserExist 检查指定用户名的用户是否存在
 func CheckUserExist(username string) (err error) {
 	sqlStr := `select count(user_id) from user where username = ?`
@@ -36,17 +32,18 @@ func CheckUserExist(username string) (err error) {
 	return
 }
 
-// InsertUser 想数据库中插入一条新的用户记录
+// InsertUser 想数据库中插入一条新的用户记录,这个返回错误信息
 func InsertUser(user *models.User) (err error) {
 	// 对密码进行加密
 	user.Password = encryptPassword(user.Password)
 	// 执行SQL语句入库
 	sqlStr := `insert into user(user_id, username, password) values(?,?,?)`
+	//传入sql加三个参数
 	_, err = db.Exec(sqlStr, user.UserID, user.Username, user.Password)
 	return
 }
 
-// encryptPassword 密码加密
+// encryptPassword 密码加密,加密算法,以后直接抄得了
 func encryptPassword(oPassword string) string {
 	h := md5.New()
 	h.Write([]byte(secret))

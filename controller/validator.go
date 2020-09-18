@@ -29,6 +29,7 @@ func InitTrans(locale string) (err error) {
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 
 		// 注册一个获取json tag的自定义方法
+		//作为返回信息提示的字段,不然错误容易看不懂~
 		v.RegisterTagNameFunc(func(fld reflect.StructField) string {
 			name := strings.SplitN(fld.Tag.Get("json"), ",", 2)[0]
 			if name == "-" {
@@ -70,7 +71,7 @@ func InitTrans(locale string) (err error) {
 	return
 }
 
-// removeTopStruct 去除提示信息中的结构体名称
+// removeTopStruct 去除提示信息中的结构体名称,让错误更加清晰
 func removeTopStruct(fields map[string]string) map[string]string {
 	res := map[string]string{}
 	for field, err := range fields {
