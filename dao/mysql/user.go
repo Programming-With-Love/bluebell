@@ -19,6 +19,10 @@ var (
 	ErrorInvalidPassword = errors.New("用户名或密码错误")
 )
 
+func QueryUserByUsername() {
+
+}
+
 // CheckUserExist 检查指定用户名的用户是否存在
 func CheckUserExist(username string) (err error) {
 	sqlStr := `select count(user_id) from user where username = ?`
