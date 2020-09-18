@@ -28,7 +28,7 @@ func SignUpHandler(c *gin.Context) {
 		//	这里纪录一下日志,每一个字段都要有自己的类型,记录错误就是error
 		zap.L().Error("SignUp with invalid param", zap.Error(err))
 		c.JSON(http.StatusOK, gin.H{
-			"msg": "请求参数有误",
+			"msg": err.Error(),
 		})
 		return
 	}
