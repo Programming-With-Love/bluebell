@@ -2,6 +2,9 @@ app:
   name: "bulebell"
   mode: "dev"
   port: 8080
+
+auth:
+  jwt_expire8760
 log:
   level: "debug"
   filename: "web_app.log"
