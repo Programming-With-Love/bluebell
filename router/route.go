@@ -3,7 +3,7 @@ package router
 import (
 	"bluebell/controller"
 	"bluebell/logger"
-	//"bluebell/middlewares"
+	"bluebell/middlewares"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -20,9 +20,12 @@ func SetupRouter(mode string) *gin.Engine {
 	r.POST("/signup", controller.SignUpHandler)
 	// 登录
 	r.POST("/login", controller.LoginHandler)
-
-	r.GET("/ping", func(c *gin.Context) {
+	//需要token的位置加一个中间件就行了
+	r.GET("/ping", middlewares.JWTAuthMiddleware(), func(c *gin.Context) {
 		// 如果是登录的用户,判断请求头中是否有 有效的JWT  ？
+		//Authorization: Bearer xxxxxx.xxx.xxx
+
+		c.Request.Header.Get("Authorization")
 		c.JSON(http.StatusOK, gin.H{
 			"msg": "ok",
 		})
