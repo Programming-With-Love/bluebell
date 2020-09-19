@@ -19,6 +19,7 @@ import (
 var lg *zap.Logger
 
 // Init 初始化lg
+//mode用来判断日志输出位置
 func Init(cfg *setting.LogConfig, mode string) (err error) {
 	writeSyncer := getLogWriter(cfg.Filename, cfg.MaxSize, cfg.MaxBackups, cfg.MaxAge)
 	encoder := getEncoder()
@@ -31,8 +32,11 @@ func Init(cfg *setting.LogConfig, mode string) (err error) {
 	if mode == "dev" {
 		// 进入开发模式，日志输出到终端
 		consoleEncoder := zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig())
+		//根据日志性质不同而输出不同位置
 		core = zapcore.NewTee(
+			//往文件输出
 			zapcore.NewCore(encoder, writeSyncer, l),
+			//往终端输出
 			zapcore.NewCore(consoleEncoder, zapcore.Lock(os.Stdout), zapcore.DebugLevel),
 		)
 	} else {

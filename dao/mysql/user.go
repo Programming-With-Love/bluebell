@@ -11,7 +11,7 @@ import (
 // 把每一步数据库操作封装成函数
 // 待logic层根据业务需求调用
 
-const secret = "liwenzhou.com"
+const secret = "yangxiangrui.site"
 
 var (
 	ErrorUserExist       = errors.New("用户已存在")
@@ -46,6 +46,7 @@ func InsertUser(user *models.User) (err error) {
 // encryptPassword 密码加密,加密算法,以后直接抄得了
 func encryptPassword(oPassword string) string {
 	h := md5.New()
+	//加盐的字符串
 	h.Write([]byte(secret))
 	return hex.EncodeToString(h.Sum([]byte(oPassword)))
 }

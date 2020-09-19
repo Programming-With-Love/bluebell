@@ -4,7 +4,6 @@ import (
 	"bluebell/dao/mysql"
 	"bluebell/models"
 	"bluebell/pkg/snowflake"
-	"gopkg.in/errgo.v2/errors"
 )
 
 /*
@@ -14,19 +13,30 @@ import (
 
 //存放业务逻辑的代码
 
-func SignUp(p *models.ParamSignUp) {
+func SignUp(p *models.ParamSignUp) (err error) {
 	//	判断用户存不存在
-	if mysql.CheckUserExist(p.Username) {
-		return errors.New("用户已经存在")
+	if err := mysql.CheckUserExist(p.Username); err != nil {
+		return err
 	}
 	//生成UID
 	userID := snowflake.GenID()
-	u := models.User{
+	user := &models.User{
 		UserID:   userID,
 		Username: p.Username,
 		Password: p.Password,
 	}
 	//	用户密码加密
 	//保存数据仓库
-	mysql.InsertUser()
+	return mysql.InsertUser(user)
+}
+func Login(p *models.ParamLogin) error {
+
+	user := &models.User{
+		Username: p.Username,
+		Password: p.Password,
+	}
+	if err := mysql.Login(user); err != nil {
+		//	登录失败
+
+	}
 }

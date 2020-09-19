@@ -22,6 +22,7 @@ func main() {
 		fmt.Printf("load config failed, err:%v\n", err)
 		return
 	}
+	//必须要传mode,这样就行了,会输出到终端
 	if err := logger.Init(setting.Conf.LogConfig, setting.Conf.Mode); err != nil {
 		fmt.Printf("init logger failed, err:%v\n", err)
 		return
