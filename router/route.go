@@ -28,6 +28,7 @@ func SetupRouter(mode string) *gin.Engine {
 		v1.GET("/community", controller.CommunityHandler)
 		//路径参数
 		v1.GET("/community/:id", controller.CommunityDetailHandler)
+		v1.POST("/post", controller.CreatePostHandler)
 	}
 
 	//v1.GET("/ping", middlewares.JWTAuthMiddleware(), func(c *gin.Context) {
