@@ -2,6 +2,14 @@
 
 # bulebell
 
+
+
+## update on 2020.10.20:前端文件好像无法上传到GitHub
+
+## 有需要请加QQ 1099462011 :D
+
+ 
+
 ~~一个可以发帖看热度的小小网站~~ 最重要的是还可以~~摸鱼~~
 
 backend-technology-stack:gin
